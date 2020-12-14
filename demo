@@ -1,11 +1,48 @@
 SECTION-1
 #########
-1] DEPLOY INFOSYS APPLICATION AND SHOW THE DEMO
-2] JSON output is a list of items. Each item has metadata, spec [desired] and status[current].
-3] Get information about the "schema" of an object or its properties
+DEPLOY INFOSYS APPLICATION AND SHOW THE DEMO
+Get information about the "schema" of an object or its properties
+oc get deployment -o json
 oc explain deployment.status.replicas
-4] oc get dc -o json
-3]
+JSON output is a list of items. Each item has metadata, spec [desired] and status[current].
+Access properties of object
+============================
+oc get deployment name -o jsonpath='{.status.availableReplicas}'
+
+Iterates over list in the resource using [*]
+=============================================
+oc get deployment  apache -o jsonpath='{.status.conditions[*].type}'
+
+Filter items in a list using [?(condition)]
+============================================
+oc get deployment  apache -o jsonpath='{.status.conditions[?(@.type=="Available")].status}'
+
+Extracting single property from multiple resource
+=================================================
+oc get route -o jsonpath='{.items[*].spec.host}' | tr " " "\n"
+
+Print in tabular FORMAT
+===========================
+oc get pod --all-namespaces -o=custom-columns=NAME:.metadata.name,STATUS:.status.phase,NODE:.spec.nodeName
+
+Extracting single property with Multiple nesting from resources
+===============================================================
+oc get pods  -o jsonpath='{.items[*].spec.containers[*].image}' | tr " " "\n"
+
+Using range in file
+========================
+oc get nodes -o jsonpath-file=myjson.jsonpath 
+
+--show-label
+-l app=name
+
+jq
+
+SECTION-2
+=========
+
+SECTION-3
+=========
 
 SECTION-4
 #########

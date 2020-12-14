@@ -1,0 +1,6 @@
+{range .items[*]}
+{.metadata.name}
+{range .status.conditions[?(@.status=="False")]}
+{.type}{"="}{.status} {.message}
+{end}
+{end}
