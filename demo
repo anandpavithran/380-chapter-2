@@ -1,1 +1,8 @@
-
+SECTION-1
+#########
+1] DEPLOY INFOSYS APPLICATION AND SHOW THE DEMO
+2] JSON output is a list of items. Each item has metadata, spec [desired] and status[current].
+3] Get information about the "schema" of an object or its properties
+oc explain deployment.status.replicas
+4] oc get dc -o json
+3]
