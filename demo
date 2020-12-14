@@ -6,3 +6,7 @@ SECTION-1
 oc explain deployment.status.replicas
 4] oc get dc -o json
 3]
+
+SECTION-4
+#########
+CLONE GIT 380-openshift-ansible
