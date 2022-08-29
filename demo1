@@ -1,0 +1,30 @@
+deployment_generation=$(oc get -n test100 deployment/test1 -o jsonpath='{.status.observedGeneration}')
+
+#######APPLY CHANGE##################
+
+
+###################################################
+
+##Wait until the observedGeneration increases###########
+while
+new_generation=$(oc get -n test100 deployment/test1 -o jsonpath='{.status.observedGeneration}') 
+[ $new_generation -eq $deployment_generation ]
+do
+sleep 3
+done
+
+#########
+Execute the oc rollout status command specifying the new revision. 
+Note that this command does not successfully execute until the preceding changes are complete
+#########
+
+oc rollout status -n test100 deployment/test1 --revision=$new_generation
+
+#######################################
+Wait until there are no pods pending deletion.
+#######################################
+
+while [ -n "$(oc get pod -n test100 -o jsonpath='{.items[?(@.metadata.deletionTimestamp != "")].metadata.name}')" ]
+do
+sleep 3
+done
